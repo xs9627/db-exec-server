@@ -1,6 +1,5 @@
 import {Router, Request, Response, NextFunction} from 'express';
-//import sql = require('mssql');
-import * as sql from 'mssql';
+import ExecutorFactory from '../executors/ExecutorFactory'
 
 let tables = [{name: 'add_members'}];
 
@@ -13,26 +12,9 @@ export class TableRouter {
     }
 
     public getAll(req: Request, res: Response, next: NextFunction) {
-        var connection = new sql.Connection({
-            user: 'sa',
-            password: 'Active@111',
-            server: 'localhost',
-            database: ''
-        });
-        connection.connect().then(function() {
-            console.log('connect success');
-            new sql.Request(connection)
-            .query('select * from membership_service.sys.tables')
-            .then(function(recordset) {
-                console.dir(recordset);
-                res.send(recordset);
-            })
-            .catch(function(err){
-                console.log(err);
-            });
-        })
-        .catch(function(err){
-            console.log('connect error');
+        ExecutorFactory.getExecutor().execute('select * from membership_service.sys.tables')
+        .then(function(data){
+            res.send(data);
         });
     }
 
