@@ -6,6 +6,7 @@ class MSSqlExecutor implements Executor {
     constructor () {
 
     }
+
     public execute(query: string) {
         return new Promise((resolve, reject) => {
             var connection = new sql.Connection({
@@ -33,6 +34,11 @@ class MSSqlExecutor implements Executor {
             });
         });
         
+    }
+
+    public getTables(databaseName: string) {
+        let query = `select * from ${databaseName}.sys.tables`;
+        return this.execute(query);
     }
 }
 

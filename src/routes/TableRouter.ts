@@ -12,7 +12,7 @@ export class TableRouter {
     }
 
     public getAll(req: Request, res: Response, next: NextFunction) {
-        ExecutorFactory.getExecutor().execute('select * from membership_service.sys.tables')
+        ExecutorFactory.getExecutor().getTables('membership_service')
         .then(function(data){
             res.send(data);
         });
