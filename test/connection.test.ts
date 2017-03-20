@@ -7,15 +7,14 @@ import app from '../src/App';
 chai.use(chaiHttp);
 const expect = chai.expect;
 
-describe('POST api/v1/query', () => {
+describe('GET api/v1/connection', () => {
     
     it('response with Json array', () => {
-        return chai.request(app).post('/api/v1/query')
-        .send({command: 'select 1'})
+        return chai.request(app).get('/api/v1/connection/localhost/sa/Active@111')
         .then(res => {
             expect(res.status).to.eql(200);
             expect(res).to.be.json;
-            expect(res.body).to.be.an('array');
+            expect(res.body.Connected).to.equal(true);
         });
     });
 });

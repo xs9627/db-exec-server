@@ -1,10 +1,13 @@
 import Executor from './Executor';
 import MSSqlExecutor from './MSSqlExecutor';
 
-class ExecutorFactory {
-    public getExecutor (): Executor {
-        return new MSSqlExecutor();
-    }
-}
+export default class ExecutorFactory {
+    constructor () {
+        throw new Error("Cannot new this class");
 
-export default new ExecutorFactory();
+    }
+    static executor = new MSSqlExecutor();
+    // static getExecutor (): Executor {
+    //     return executor;
+    // }
+}

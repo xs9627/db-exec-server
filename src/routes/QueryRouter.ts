@@ -13,9 +13,10 @@ export class QueryRouter {
 
     public getAll(req: Request, res: Response, next: NextFunction) {
         let command = req.body.command;
-        console.log(req);
-        ExecutorFactory.getExecutor().execute(command)
+        //console.log(req);
+        ExecutorFactory.executor.execute(command)
         .then(function(data){
+            console.log(data);
             res.send(data);
         })
         .catch(function(err){
