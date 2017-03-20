@@ -32,6 +32,22 @@ class MSSqlExecutor implements Executor {
         });
     }
 
+    public executeWithConnection(connectionId: string, query: string): Promise<{}> {
+        var connection = this.connections[connectionId];
+        return new Promise((resolve, reject) => {
+            new sql.Request(connection)
+            .query<any>(query)
+            .then(function(recordset) {
+                //console.dir(recordset);
+                resolve(recordset);
+            })
+            .catch(function(err){
+                console.log(err);
+                resolve(err);
+            });
+        });
+    }
+
     public execute(query: string) {
         return new Promise((resolve, reject) => {
             var connection = new sql.Connection({

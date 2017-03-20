@@ -24,9 +24,24 @@ export class QueryRouter {
         });
     }
 
+    public queryWithConnection(req: Request, res: Response, next: NextFunction) {
+        let connectionId = req.params.connectionId;
+        let command = req.body.command;
+        //console.log(req);
+        ExecutorFactory.executor.executeWithConnection(connectionId, command)
+        .then(function(data){
+            console.log(data);
+            res.send(data);
+        })
+        .catch(function(err){
+            res.send(err);
+        });
+    }
+
 
     init() {
         this.router.post('/', this.getAll);
+        this.router.post('/:connectionId', this.queryWithConnection);
     }
 }
 
